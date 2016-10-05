@@ -98,8 +98,5 @@ export CLASSPATH="/usr/share/java/*.jar"
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
-# Local config
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 

@@ -20,8 +20,6 @@
 [core]
 	excludesfile = /Users/sam/.gitignore
   autocrlf = input
-[include]
-  path = .gitconfig.local
 [commit]
   template = ~/.gitmessage
 [user]
