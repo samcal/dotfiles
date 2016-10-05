@@ -1,0 +1,9 @@
+# Save mp3 of first youtube result to current directory
+mp3() {
+    youtube-dl --default-search=ytsearch: \
+               --restrict-filenames \
+               --format=bestaudio \
+               --extract-audio \
+               --audio-format=mp3 \
+               --audio-quality=1 "$*"
+}
