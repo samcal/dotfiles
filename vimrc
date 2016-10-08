@@ -225,12 +225,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Resize splits with Leader + Direction
-nnoremap <leader>h :vertical resize +5<cr>
-nnoremap <leader>j :resize -5<cr>
-nnoremap <leader>k :resize +5<cr>
-nnoremap <leader>l :vertical resize -5<cr>
-
 " Paste from system clipboard
 nnoremap <leader>P "+p<cr>
 
