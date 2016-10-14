@@ -64,22 +64,17 @@ bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 export VISUAL=vim
 export EDITOR=$VISUAL
 
-# load rbenv if available
-if which rbenv &>/dev/null ; then
-  eval "$(rbenv init - --no-rehash)"
-fi
-
 # mkdir .git/safe in the root of repositories you trust
 export PATH=".git/safe/../../bin:$PATH"
 
 export GOPATH="$HOME/workspace/go/"
 export PATH="$PATH:$GOPATH/bin"
 
+# Use the binaries from current node_modules. Completion doesn't know about
+# these, so we need to nocorrect the important ones.
 export PATH=node_modules/.bin:$PATH
 alias gulp="nocorrect gulp"
 alias grunt="nocorrect grunt"
-
-export PATH="$HOME/Library/Haskell/bin:$PATH"
 
 export CLASSPATH="/usr/share/java/*.jar"
 
