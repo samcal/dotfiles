@@ -67,7 +67,7 @@ export EDITOR=$VISUAL
 # mkdir .git/safe in the root of repositories you trust
 export PATH=".git/safe/../../bin:$PATH"
 
-export GOPATH="$HOME/workspace/go/"
+export GOPATH="$HOME/workspace/go"
 export PATH="$PATH:$GOPATH/bin"
 
 # Bring in the sbins too
