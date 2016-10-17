@@ -29,6 +29,9 @@ call plug#begin('~/.vim/plugged')
   " Tools to change delimiters
   Plug 'tpope/vim-surround'
 
+  " Helping out netrw
+  Plug 'tpope/vim-vinegar'
+
   " Tools for code alignment
   Plug 'junegunn/vim-easy-align'
 
