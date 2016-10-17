@@ -70,6 +70,10 @@ export PATH=".git/safe/../../bin:$PATH"
 export GOPATH="$HOME/workspace/go/"
 export PATH="$PATH:$GOPATH/bin"
 
+# Bring in the sbins too
+export PATH="$PATH:/sbin"
+export PATH="$PATH:/usr/sbin"
+
 # Put installed binaries in /usr/local/bin
 export PATH="/usr/local/bin:$PATH"
 
