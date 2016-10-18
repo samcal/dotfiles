@@ -85,8 +85,10 @@ alias grunt="nocorrect grunt"
 
 export CLASSPATH="/usr/share/java/*.jar"
 
+# Setup version managers
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export NVM_DIR="/Users/sam/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
