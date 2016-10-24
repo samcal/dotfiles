@@ -222,12 +222,6 @@ nnoremap <Right> :echoe "Use l"<cr>
 nnoremap <leader>\ :vsplit<cr>
 nnoremap <leader>- :split<cr>
 
-" Move around spliits with Ctrl + Direction
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
 " Paste from system clipboard
 nnoremap <leader>P "+p<cr>
 
