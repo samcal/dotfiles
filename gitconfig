@@ -14,7 +14,7 @@
   kill-branches = !git branch | grep -v '\\*\\|master' | xargs -n 1 git branch -d
   last = log -1 HEAD
   merge-branch = !git checkout master && git merge @{-1}
-  open-remote = "!git remote get-url ${1:-origin} | xargs -n 1 open #"
+  open-remote = !sh -c 'git remote get-url ${1:-origin} | xargs -n 1 open' -
   pr = !hub pull-request
   st = status
   up = !git fetch origin && git rebase origin/master
