@@ -38,6 +38,9 @@ call plug#begin('~/.vim/plugged')
   " Tools for HTML
   Plug 'othree/html5.vim', { 'for': 'html' }
 
+  " Emmet for writing HTML quickly
+  Plug 'mattn/emmet-vim', { 'for': 'html' }
+
   " Tools for Elm
   Plug 'lambdatoast/elm.vim'
 call plug#end()
