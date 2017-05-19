@@ -17,6 +17,9 @@ call plug#begin('~/.vim/plugged')
   " Fuzzy file finder
   Plug 'ctrlpvim/ctrlp.vim'
 
+  " Autogenerate tags
+  Plug 'craigemery/vim-autotag'
+
   " Seamless transition between vim-splits and tmux panes
   Plug 'christoomey/vim-tmux-navigator'
 
