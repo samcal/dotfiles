@@ -27,4 +27,4 @@
   name = Sam Calvert
   email = sam.clvrt@gmail.com
 [credential]
-  helper = cache --timeout=3600
+  helper = osxkeychain
