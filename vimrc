@@ -38,6 +38,9 @@ call plug#begin('~/.vim/plugged')
   " Tools for code alignment
   Plug 'junegunn/vim-easy-align'
 
+  " Notetaking
+  Plug 'vimwiki/vimwiki'
+
   " Tools for HTML
   Plug 'othree/html5.vim', { 'for': 'html' }
 
@@ -200,6 +203,13 @@ if has('autocmd')
          \ endif
 
     autocmd BufNewFile,BufRead *.markdown,*.md set filetype=markdown
+
+    " Build html after wiki saves
+    autocmd FileWritePost   *.wiki :Vimwiki2HTML
+    autocmd FileAppendPost  *.wiki :Vimwiki2HTML
+    autocmd FilterWritePost *.wiki :Vimwiki2HTML
+    autocmd BufWritePost    *.wiki :Vimwiki2HTML
+
   augroup END
 endif
 " --- }}}
@@ -216,7 +226,7 @@ nnoremap <leader>r :so $MYVIMRC<cr>
 nnoremap <leader><leader> <c-^>
 
 " Save files
-nnoremap <Leader>w :w<cr>
+nnoremap <Leader>e :w<cr>
 
 " Disable arrow keys
 nnoremap <Left> :echoe "Use h"<cr>
