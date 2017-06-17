@@ -41,6 +41,9 @@ call plug#begin('~/.vim/plugged')
   " Notetaking
   Plug 'vimwiki/vimwiki'
 
+  " Tools for TypeScript
+  Plug 'leafgarland/typescript-vim'
+
   " Tools for HTML
   Plug 'othree/html5.vim', { 'for': 'html' }
 
@@ -147,7 +150,8 @@ set wildignore+=*/bower_components/*,*.svg,*/*.egg-info/*,*/bin/*
 " --- Color scheme {{{
 highlight CursorLine cterm=NONE ctermbg=black
 highlight NonText guibg=#060606
-highlight Folded  ctermbg=14 ctermfg=15
+highlight Folded ctermbg=14 ctermfg=15
+highlight Todo cterm=NONE ctermfg=white ctermbg=darkred
 " --- }}}
 
 " --- Tab completion {{{
@@ -181,8 +185,8 @@ if has('autocmd')
     " Check spelling in git commits
     autocmd FileType gitcommit setlocal spell textwidth=72
 
-    " Ruby and Sass are oddballs in the family, use special spacing/rules
-    autocmd FileType vim,ruby,scss,sass,eruby,coffee setlocal ts=2 sts=2 sw=2
+    " Filetypes with 2-space indents
+    autocmd FileType vim,ruby,scss,sass,typescript setlocal ts=2 sts=2 sw=2
 
     " 2 space indents for html
     autocmd FileType html setlocal ts=2 sts=2 sw=2
