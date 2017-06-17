@@ -255,6 +255,9 @@ nnoremap <leader>l :nohlsearch<cr>
 " Grep word under cursor, brings up quickfix window
 nnoremap K :grep! "\b<cword>\b"<cr>:cw<cr>
 
+" Use jj to escape insert mode
+inoremap jj <esc>
+
 " --- }}}
 
 " --- Status Line {{{
