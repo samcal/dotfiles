@@ -15,7 +15,7 @@
   last = log -1 HEAD
   merge-branch = !git checkout master && git merge @{-1}
   open-remote = !sh -c 'git remote get-url ${1:-origin} | xargs -n 1 open' -
-  pr = !hub pull-request
+  pr = !hub pull-request --browse
   st = status
   up = !git fetch origin && git rebase origin/master
 [core]
