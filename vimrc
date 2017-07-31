@@ -192,7 +192,7 @@ if has('autocmd')
     autocmd FileType html setlocal ts=2 sts=2 sw=2
 
     " Wrap at 80 cols and spell check
-    autocmd FileType md,markdown,text setlocal spell tw=79 fo+=a
+    autocmd FileType md,markdown,text setlocal spell tw=79
 
     " Remove whitespace on save
     autocmd FileWritePre    * :call TrimTrailingWhiteSpace()
