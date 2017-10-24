@@ -152,6 +152,9 @@ highlight CursorLine cterm=NONE ctermbg=black
 highlight NonText guibg=#060606
 highlight Folded ctermbg=14 ctermfg=15
 highlight Todo cterm=NONE ctermfg=white ctermbg=darkred
+highlight DiffAdd ctermfg=black ctermbg=2
+highlight DiffDelete ctermfg=white ctermbg=darkred
+highlight DiffChange ctermfg=white ctermbg=yellow
 " --- }}}
 
 " --- Tab completion {{{
