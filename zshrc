@@ -77,6 +77,9 @@ export PATH="$PATH:/usr/sbin"
 # Put installed binaries in /usr/local/bin
 export PATH="/usr/local/bin:$PATH"
 
+# Installed packages with pip
+export PATH="/Users/sam/Library/Python/3.6/bin:$PATH"
+
 # Use the binaries from current node_modules. Completion doesn't know about
 # these, so we need to nocorrect the important ones.
 export PATH=node_modules/.bin:$PATH
