@@ -150,7 +150,7 @@ set wildignore+=*/bower_components/*,*.svg,*/*.egg-info/*,*/bin/*
 " --- Color scheme {{{
 highlight CursorLine cterm=NONE ctermbg=black
 highlight NonText guibg=#060606
-highlight Folded ctermbg=14 ctermfg=15
+highlight Folded ctermbg=darkblue ctermfg=white
 highlight Todo cterm=NONE ctermfg=white ctermbg=darkred
 highlight DiffAdd ctermfg=black ctermbg=2
 highlight DiffDelete ctermfg=white ctermbg=darkred
@@ -189,7 +189,7 @@ if has('autocmd')
     autocmd FileType gitcommit setlocal spell textwidth=72
 
     " Filetypes with 2-space indents
-    autocmd FileType vim,ruby,scss,sass,typescript setlocal ts=2 sts=2 sw=2
+    autocmd FileType vim,ruby,scss,sass setlocal ts=2 sts=2 sw=2
 
     " 2 space indents for html
     autocmd FileType html setlocal ts=2 sts=2 sw=2
@@ -216,7 +216,6 @@ if has('autocmd')
     autocmd FileAppendPost  *.wiki :Vimwiki2HTML
     autocmd FilterWritePost *.wiki :Vimwiki2HTML
     autocmd BufWritePost    *.wiki :Vimwiki2HTML
-
   augroup END
 endif
 " --- }}}
