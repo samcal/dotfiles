@@ -74,8 +74,9 @@ export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:/sbin"
 export PATH="$PATH:/usr/sbin"
 
-# Put installed binaries in /usr/local/bin
+# Put installed binaries in /usr/local/bin or ~/.local/bin
 export PATH="/usr/local/bin:$PATH"
+export PATH="~/.local/bin:$PATH"
 
 # Installed packages with pip
 export PATH="/Users/sam/Library/Python/3.6/bin:$PATH"
@@ -83,10 +84,6 @@ export PATH="/Users/sam/Library/Python/3.6/bin:$PATH"
 # Use the binaries from current node_modules. Completion doesn't know about
 # these, so we need to nocorrect the important ones.
 export PATH=node_modules/.bin:$PATH
-alias gulp="nocorrect gulp"
-alias grunt="nocorrect grunt"
-
-export CLASSPATH="/usr/share/java/*.jar"
 
 # Setup version managers
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
