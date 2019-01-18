@@ -1,3 +1,5 @@
+#!/bin/zsh
+#
 # Play mp3 of first youtube result for the search $*
 play() {
     youtube-dl --default-search=ytsearch: \

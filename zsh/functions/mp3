@@ -1,3 +1,5 @@
+#!/bin/zsh
+#
 # Save mp3 of first youtube result to current directory
 mp3() {
     youtube-dl --default-search=ytsearch: \
