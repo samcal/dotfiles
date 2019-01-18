@@ -30,3 +30,5 @@
   helper = osxkeychain
 [blame]
   date = format-local:%a %D %k:%M
+[diff]
+  algorithm = histogram
