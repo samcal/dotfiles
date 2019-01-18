@@ -20,6 +20,9 @@ call plug#begin('~/.vim/plugged')
   " Autogenerate tags
   Plug 'craigemery/vim-autotag'
 
+  " Ctags Outline View
+  Plug 'majutsushi/tagbar'
+
   " Seamless transition between vim-splits and tmux panes
   Plug 'christoomey/vim-tmux-navigator'
 
@@ -94,6 +97,7 @@ set hidden                      " When I open a new file in a buffer, hide old b
 set shortmess+=Iat              " Disable help screen, avoid enter prompt
 set nowrap                      " Don't line wrap
 set backspace=indent,eol,start  " Treat backspace as delete
+set modeline                    " Make file-specific settings in comments
 
 " Split in the correct direction
 set splitbelow
@@ -189,7 +193,7 @@ if has('autocmd')
     autocmd FileType gitcommit setlocal spell textwidth=72
 
     " Filetypes with 2-space indents
-    autocmd FileType vim,ruby,scss,sass setlocal ts=2 sts=2 sw=2
+    autocmd FileType vim,ruby,scss,sass,typescript setlocal ts=2 sts=2 sw=2
 
     " 2 space indents for html
     autocmd FileType html setlocal ts=2 sts=2 sw=2
