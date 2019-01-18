@@ -28,3 +28,5 @@
   email = sam.clvrt@gmail.com
 [credential]
   helper = osxkeychain
+[blame]
+  date = format-local:%a %D %k:%M
