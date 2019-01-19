@@ -4,20 +4,12 @@
   ui = auto
 [alias]
   aa = add --all
-  ap = add --patch
   ca = commit --amend
-  ci = commit -v
   cleanup = !git branch --merged | grep -v '\\*\\|master' | xargs -n 1 git branch -d
   co = !git checkout $(git branch | fzf)
-  create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
-  delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
-  kill-branches = !git branch | grep -v '\\*\\|master' | xargs -n 1 git branch -d
   last = log -1 HEAD
-  merge-branch = !git checkout master && git merge @{-1}
   open-remote = !sh -c 'git remote get-url ${1:-origin} | xargs -n 1 open' -
   pr = !hub pull-request --browse
-  st = status
-  up = !git fetch origin && git rebase origin/master
 [core]
   excludesfile = /Users/sam/.gitignore
   autocrlf = input
