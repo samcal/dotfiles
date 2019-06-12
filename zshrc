@@ -85,10 +85,5 @@ export PATH="/Users/sam/Library/Python/3.6/bin:$PATH"
 # these, so we need to nocorrect the important ones.
 export PATH=node_modules/.bin:$PATH
 
-# Setup version managers
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-export NVM_DIR="/Users/sam/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
