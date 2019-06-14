@@ -76,7 +76,7 @@ export PATH="$PATH:/usr/sbin"
 
 # Put installed binaries in /usr/local/bin or ~/.local/bin
 export PATH="/usr/local/bin:$PATH"
-export PATH="~/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Installed packages with pip
 export PATH="/Users/sam/Library/Python/3.6/bin:$PATH"
