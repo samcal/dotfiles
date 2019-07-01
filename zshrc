@@ -79,11 +79,18 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # Installed packages with pip
-export PATH="/Users/sam/Library/Python/3.6/bin:$PATH"
+export PATH="$HOME/Library/Python/3.6/bin:$PATH"
+
+# Installed packages with npm
+export PATH="$PATH:$HOME/.local/lib/npm/bin"
 
 # Use the binaries from current node_modules. Completion doesn't know about
 # these, so we need to nocorrect the important ones.
 export PATH=node_modules/.bin:$PATH
+
+# Setup version managers
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
