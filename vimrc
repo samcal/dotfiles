@@ -17,6 +17,9 @@ call plug#begin('~/.vim/plugged')
   " Fuzzy file finder
   Plug 'ctrlpvim/ctrlp.vim'
 
+  " Async linter
+  Plug 'w0rp/ale'
+
   " Autogenerate tags
   Plug 'craigemery/vim-autotag'
 
@@ -55,6 +58,9 @@ call plug#begin('~/.vim/plugged')
 
   " Tools for Elm
   Plug 'lambdatoast/elm.vim'
+
+  " Tools for JSX
+  Plug 'MaxMEllon/vim-jsx-pretty'
 call plug#end()
 
 " --- }}}
@@ -178,10 +184,6 @@ inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 " --- }}}
 
 " --- Autocommands {{{
-function! TrimTrailingWhiteSpace()
-    %s/\s\+$//e
-endfunction
-
 if has('autocmd')
   augroup standard
     autocmd!
@@ -193,19 +195,13 @@ if has('autocmd')
     autocmd FileType gitcommit setlocal spell textwidth=72
 
     " Filetypes with 2-space indents
-    autocmd FileType vim,ruby,scss,sass,typescript setlocal ts=2 sts=2 sw=2
+    autocmd FileType vim,javascript setlocal ts=2 sts=2 sw=2
 
     " 2 space indents for html
     autocmd FileType html setlocal ts=2 sts=2 sw=2
 
     " Wrap at 80 cols and spell check
     autocmd FileType md,markdown,text setlocal spell tw=79
-
-    " Remove whitespace on save
-    autocmd FileWritePre    * :call TrimTrailingWhiteSpace()
-    autocmd FileAppendPre   * :call TrimTrailingWhiteSpace()
-    autocmd FilterWritePre  * :call TrimTrailingWhiteSpace()
-    autocmd BufWritePre     * :call TrimTrailingWhiteSpace()
 
     " Restore file cursor position on open
     autocmd BufReadPost *
@@ -248,7 +244,8 @@ nnoremap <Right> :echoe "Use l"<cr>
 nnoremap <leader>\ :vsplit<cr>
 nnoremap <leader>- :split<cr>
 
-" Paste from system clipboard
+" Copy/Paste to/from system clipboard
+vnoremap <leader>C "+ygv
 nnoremap <leader>P "+p<cr>
 
 " Don't deselect in visual mode when indenting/dedenting
@@ -301,6 +298,21 @@ let g:ctrlp_max_height=15           " Height of the ctrlp window
 
 " ctags with CtrlP
 nnoremap <leader>. :CtrlPTag<cr>
+
+" --- }}}
+
+" --- Ale {{{
+
+let g:ale_linters = {
+\   'javascript': ['eslint']
+\}
+
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\}
+
+let g:ale_fix_on_save = 1
 
 " --- }}}
 
