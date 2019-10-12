@@ -7,6 +7,7 @@
   ca = commit --amend
   cleanup = !git branch --merged | grep -v '\\*\\|master' | xargs -n 1 git branch -d
   co = !git checkout $(git branch | fzf)
+  del = !git branch -D $(git branch | fzf)
   last = log -1 HEAD
   open-remote = !sh -c 'git remote get-url ${1:-origin} | xargs -n 1 open' -
   pr = !hub pull-request --browse
@@ -19,3 +20,11 @@
   date = format-local:%a %D %k:%M
 [diff]
   algorithm = histogram
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Sam Calvert
+	email = sam@outschool.com
