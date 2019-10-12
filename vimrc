@@ -4,6 +4,34 @@ if &compatible
   set nocompatible
 end
 
+
+" --- Ale {{{
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'jsx': ['eslint'],
+\   'javascriptreact': ['eslint'],
+\   'typescript': ['tsserver', 'eslint'],
+\   'typescriptreact': ['tsserver', 'eslint'],
+\}
+
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'javascriptreact': ['prettier'],
+\   'typescript': ['prettier'],
+\   'typescriptreact': ['prettier'],
+\   'less': ['prettier'],
+\}
+
+let g:ale_fix_on_save = 1
+
+" ALE completion needs to be configured before loading, so this block goes
+" above the vim-plug block
+let g:ale_completion_enabled = 1
+let g:ale_completion_tsserver_autoimport = 1
+
+" --- }}}
+
 " --- Vim Plug {{{
 
 " Auto-install plug-vim
@@ -48,7 +76,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'vimwiki/vimwiki'
 
   " Tools for TypeScript
-  Plug 'leafgarland/typescript-vim'
+  Plug 'HerringtonDarkholme/yats.vim'
 
   " Tools for HTML
   Plug 'othree/html5.vim', { 'for': 'html' }
@@ -61,6 +89,9 @@ call plug#begin('~/.vim/plugged')
 
   " Tools for JSX
   Plug 'MaxMEllon/vim-jsx-pretty'
+
+  " Manage JS imports
+  Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 call plug#end()
 
 " --- }}}
@@ -159,6 +190,7 @@ set wildignore+=*/bower_components/*,*.svg,*/*.egg-info/*,*/bin/*
 
 " --- Color scheme {{{
 highlight CursorLine cterm=NONE ctermbg=black
+highlight CursorLineNr cterm=NONE
 highlight NonText guibg=#060606
 highlight Folded ctermbg=darkblue ctermfg=white
 highlight Todo cterm=NONE ctermfg=white ctermbg=darkred
@@ -195,10 +227,13 @@ if has('autocmd')
     autocmd FileType gitcommit setlocal spell textwidth=72
 
     " Filetypes with 2-space indents
-    autocmd FileType vim,javascript setlocal ts=2 sts=2 sw=2
+    autocmd FileType vim,javascript,javascriptreact,typescript,typescript.tsx,typescriptreact setlocal ts=2 sts=2 sw=2
 
     " 2 space indents for html
     autocmd FileType html setlocal ts=2 sts=2 sw=2
+
+    " Fallback to typescript.tsx filetype for now
+    autocmd FileType typescriptreact setlocal filetype=typescript.tsx
 
     " Wrap at 80 cols and spell check
     autocmd FileType md,markdown,text setlocal spell tw=79
@@ -218,6 +253,10 @@ if has('autocmd')
     autocmd BufWritePost    *.wiki :Vimwiki2HTML
   augroup END
 endif
+" --- }}}
+
+" --- Abbreviations {{{
+abbreviate cagdas Çağdaş
 " --- }}}
 
 " --- Mappings {{{
@@ -261,6 +300,8 @@ nnoremap K :grep! "\b<cword>\b"<cr>:cw<cr>
 " Use jj to escape insert mode
 inoremap jj <esc>
 
+" Expand opening-brace followed by ENTER to a block and place cursor inside
+inoremap {<CR> {<CR>}<Esc>O
 " --- }}}
 
 " --- Status Line {{{
@@ -301,38 +342,10 @@ nnoremap <leader>. :CtrlPTag<cr>
 
 " --- }}}
 
-" --- Ale {{{
+" --- Tagbar {{{
 
-let g:ale_linters = {
-\   'javascript': ['eslint']
-\}
-
-let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\   'css': ['prettier'],
-\}
-
-let g:ale_fix_on_save = 1
-
-" --- }}}
-
-" --- Syntastic {{{
-
-" Clear visual marks for errors and warnings
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-
-" Enable the quick fix window on open and save
-let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq=0
-
-" Location list settings
-let g:syntastic_loc_list_height=5
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_auto_loc_list=1
-
-" Enable some sane default JavaScript options
-let g:syntastic_javascript_jslint_args = '--nomen --browser --node'
+" ctags with Tagbar
+nnoremap <leader>t :TagbarToggle<cr>
 
 " --- }}}
 
