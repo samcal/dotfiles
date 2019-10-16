@@ -244,7 +244,7 @@ if has('autocmd')
          \   exe "normal! g`\"" |
          \ endif
 
-    autocmd BufNewFile,BufRead *.markdown,*.md set filetype=markdown
+    autocmd BufNewFile,BufRead *.markdown,*.md setlocal filetype=markdown
 
     " Build html after wiki saves
     autocmd FileWritePost   *.wiki :Vimwiki2HTML
@@ -272,12 +272,6 @@ nnoremap <leader><leader> <c-^>
 
 " Save files
 nnoremap <Leader>e :w<cr>
-
-" Disable arrow keys
-nnoremap <Left> :echoe "Use h"<cr>
-nnoremap <Down> :echoe "Use j"<cr>
-nnoremap <Up> :echoe "Use k"<cr>
-nnoremap <Right> :echoe "Use l"<cr>
 
 " Window splits
 nnoremap <leader>\ :vsplit<cr>
@@ -321,14 +315,14 @@ set statusline+=\ [%P]                      " percentage in file
 " --- }}}
 
 " --- The Silver Searcher {{{
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
+if executable('rg')
+  " Use ripgrep over grep
+  set grepprg=rg\ --vimgrep\ --no-heading
 
-  " Use Ag in CtrlP for listing files. Super fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Use ripgrep in CtrlP for listing files. Super fast and respects .gitignore
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
 
-  " Ag is fast enough that CtrlP doesn't need to cache
+  " ripgrep is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
 " --- }}}
