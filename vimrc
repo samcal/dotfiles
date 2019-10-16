@@ -6,7 +6,6 @@ end
 
 
 " --- Ale {{{
-
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'jsx': ['eslint'],
@@ -29,11 +28,9 @@ let g:ale_fix_on_save = 1
 " above the vim-plug block
 let g:ale_completion_enabled = 1
 let g:ale_completion_tsserver_autoimport = 1
-
 " --- }}}
 
 " --- Vim Plug {{{
-
 " Auto-install plug-vim
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -93,11 +90,9 @@ call plug#begin('~/.vim/plugged')
   " Manage JS imports
   Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 call plug#end()
-
 " --- }}}
 
 " --- General Settings {{{
-
 " File Settings
 set encoding=utf-8              " Read files using utf-8
 set autoread                    " Read a changed file
@@ -178,7 +173,6 @@ set smartindent                 " Try to 'improve' indenting rules
 set foldenable                  " Enable code folding on markers
 set foldmethod=marker
 set foldnestmax=1
-
 " --- }}}
 
 " --- Wild Menu {{{
@@ -260,7 +254,6 @@ abbreviate cagdas Çağdaş
 " --- }}}
 
 " --- Mappings {{{
-
 " Leader
 let mapleader = " "
 
@@ -299,7 +292,6 @@ inoremap {<CR> {<CR>}<Esc>O
 " --- }}}
 
 " --- Status Line {{{
-
 set laststatus=2
 set statusline=%f%m%r%h                     " file, modified, ro, help tags
 if v:version >= 703
@@ -311,15 +303,14 @@ set statusline+=%*                          "*
 set statusline+=\ %=#%n                     " start right-align. buffer number
 set statusline+=\ %l/%L,%c                  " lines/total, column
 set statusline+=\ [%P]                      " percentage in file
-
 " --- }}}
 
-" --- The Silver Searcher {{{
+" --- Ripgrep {{{
 if executable('rg')
   " Use ripgrep over grep
   set grepprg=rg\ --vimgrep\ --no-heading
 
-  " Use ripgrep in CtrlP for listing files. Super fast and respects .gitignore
+  " Use ripgrep in CtrlP for listing files
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
 
   " ripgrep is fast enough that CtrlP doesn't need to cache
@@ -328,30 +319,24 @@ endif
 " --- }}}
 
 " --- CtrlP {{{
-
 let g:ctrlp_max_height=15           " Height of the ctrlp window
 
 " ctags with CtrlP
 nnoremap <leader>. :CtrlPTag<cr>
-
 " --- }}}
 
 " --- Tagbar {{{
-
 " ctags with Tagbar
 nnoremap <leader>t :TagbarToggle<cr>
-
 " --- }}}
 
 " --- Fugitive {{{
-
 nnoremap <leader>b :Gblame<cr>
 nnoremap <leader>B :Gbrowse<cr>
 nnoremap <leader>c :Gcommit %<cr>
 nnoremap <leader>C :Gcommit -a<cr>
 nnoremap <leader>d :Gdiff<cr>
 nnoremap <leader>s :Gstatus<cr>
-
 " --- }}}
 
 " --- Easy Align {{{
