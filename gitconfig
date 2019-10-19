@@ -16,6 +16,7 @@
   autocrlf = input
 [commit]
   template = ~/.gitmessage
+  verbose = true
 [blame]
   date = format-local:%a %D %k:%M
 [diff]
