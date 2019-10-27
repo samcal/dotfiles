@@ -75,6 +75,9 @@ call plug#begin('~/.vim/plugged')
   " Tools for TypeScript
   Plug 'HerringtonDarkholme/yats.vim'
 
+  " Tools for GraphQL
+  Plug 'jparise/vim-graphql'
+
   " Tools for HTML
   Plug 'othree/html5.vim', { 'for': 'html' }
 
