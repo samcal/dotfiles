@@ -5,7 +5,6 @@
 --exclude=*dist/*
 
 --langdef=javascript
---map-javascript=+.js,+.jsx
 --kinddef-javascript=c,class,classes
 --kinddef-javascript=e,export,exports
 --kinddef-javascript=f,function,functions

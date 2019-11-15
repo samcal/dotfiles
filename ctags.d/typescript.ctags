@@ -1,0 +1,57 @@
+--langdef=typescript
+--map-typescript=+.tsx
+--kinddef-typescript=c,class,classes
+--kinddef-typescript=e,export,exports
+--kinddef-typescript=f,function,functions
+--kinddef-typescript=m,method,methods
+--kinddef-typescript=p,property,properties
+--kinddef-typescript=v,variable,variables
+
+--regex-typescript=/^[ \t]*const[ \t]\{1,\}\([A-Z][A-Za-z0-9_$]\{1,\}\)[ \t]*=[ \t]*function/\1/c/
+--regex-typescript=/^[ \t]*class[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)/\1/c/
+
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}const[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)/\1/e/
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}function[ \t]\{1,\}\([A-Za-z0-9_$\{\}]\{1,\}\)/\1/e/
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}const[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*[^,]\{1,\},[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\2/e/
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}const[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*[^,]\{1,\},[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\3/e/
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}class[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*[^,]\{1,\},[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\3/e/
+
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}default[ \t]\{1,\}const[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)/\1/e/
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}default[ \t]\{1,\}function[ \t]\{1,\}\([A-Za-z0-9_$\{\}]\{1,\}\)/\1/e/
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}default[ \t]\{1,\}const[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*[^,]\{1,\},[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\2/e/
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}default[ \t]\{1,\}const[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*[^,]\{1,\},[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\3/e/
+--regex-typescript=/^[ \t]*export[ \t]\{1,\}default[ \t]\{1,\}class[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*[^,]\{1,\},[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\3/e/
+
+--regex-typescript=/^[ \t]*function[ \t]*\([A-Za-z0-9_$\{\}]\{1,\}\)[ \t(]/\1/f/
+--regex-typescript=/^[ \t]*[(]function[ \t]*\([A-Za-z0-9_$\{\}]\{1,\}\)[ \t(]/\1/f/
+--regex-typescript=/^[ \t]*async[ \t]function[ \t]*\([A-Za-z0-9_$\{\}]\{1,\}\)[ \t(]/\1/f/
+--regex-typescript=/^[ \t]*[(]async[ \t]function[ \t]*\([A-Za-z0-9_$\{\}]\{1,\}\)[ \t(]/\1/f/
+--regex-typescript=/^[ \t]*const[ \t]\{1,\}\([a-z][A-Za-z0-9_$\{\}]\{1,\}\)[ \t]*=[ \t]*function[^\*][^\*]/\1/f/
+--regex-typescript=/^[ \t]*const[ \t]\{1,\}\([a-z][A-Za-z0-9_$\{\}]\{1,\}\)[ \t]*=[ \t]*([^)]*$/\1/f/
+--regex-typescript=/^[ \t]*const[ \t]\{1,\}\([a-z][A-Za-z0-9_$\{\}]\{1,\}\)[ \t]*=[^=]*[ \t]*=>/\1/f/
+
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)\.\([A-Za-z0-9_$\{\}]\{1,\}\)[ \t]*=[ \t]*function/\2/m/
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)\.\([A-Za-z0-9_$\{\}]\{1,\}\)[ \t]*=[ \t]*(/\2/m/
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)\.\([A-Za-z0-9_$\{\}]\{1,\}\)\.\([A-Za-z0-9_$]\{1,\}\)[ \t]*=[ \t]*function/\3/m/
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)\.\([A-Za-z0-9_$\{\}]\{1,\}\)\.\([A-Za-z0-9_$]\{1,\}\)[ \t]*=[ \t]*(/\3/m/
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*[:=][ \t]*[(]*function[ \t]*(/\1/m/
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*[:=][ \t](\{1,\}/\1/m/
+--regex-typescript=/^[ \t]*static[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*(/\1/m/
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)(.*)[ \t]*[{]/\1/m/
+
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)\.\([A-Za-z0-9_$]\{1,\}\)[ \t]*[=][ \t]*{/\2/p/
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*:[ \t]*[{"\/\[]/\1/p/
+--regex-typescript=/^[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*:[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t,]*$/\1/p/
+
+--regex-typescript=/^[ \t]*var[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*=[ \t]*[0-9\"'\/]/\1/v/
+--regex-typescript=/^[ \t]*let[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*=[ \t]*[0-9\"'\/]/\1/v/
+--regex-typescript=/^[ \t]*const[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*=[ \t]*[0-9\"'\/]/\1/v/
+--regex-typescript=/^[ \t]*var[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*=[ \t]*new/\1/v/
+--regex-typescript=/^[ \t]*let[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*=[ \t]*new/\1/v/
+--regex-typescript=/^[ \t]*const[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*=[ \t]*new/\1/v/
+--regex-typescript=/^[ \t]*var[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*[,;]/\1/v/
+--regex-typescript=/^[ \t]*let[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*[,;]/\1/v/
+--regex-typescript=/^[ \t]*var[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\2/v/
+--regex-typescript=/^[ \t]*let[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\2/v/
+--regex-typescript=/^[ \t]*var[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\3/v/
+--regex-typescript=/^[ \t]*let[ \t]\{1,\}\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)[ \t]*,[ \t]*\([A-Za-z0-9_$]\{1,\}\)/\3/v/
