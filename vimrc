@@ -324,20 +324,6 @@ omap af <Plug>(coc-funcobj-a)
 
 " --- }}}
 
-" --- Status Line {{{
-set laststatus=2
-set statusline=%f%m%r%h                     " file, modified, ro, help tags
-if v:version >= 703
-  set statusline+=%q                        " quickfix tag
-endif
-set statusline+=\ %{fugitive#statusline()}  " git status (branch)
-set statusline+=%#warningmsg#
-set statusline+=%*                          "*
-set statusline+=\ %=#%n                     " start right-align. buffer number
-set statusline+=\ %l/%L,%c                  " lines/total, column
-set statusline+=\ [%P]                      " percentage in file
-" --- }}}
-
 " --- Ripgrep {{{
 if executable('rg')
   " Use ripgrep over grep
