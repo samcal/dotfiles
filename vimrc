@@ -23,11 +23,6 @@ let g:ale_fixers = {
 \}
 
 let g:ale_fix_on_save = 1
-
-" ALE completion needs to be configured before loading, so this block goes
-" above the vim-plug block
-let g:ale_completion_enabled = 1
-let g:ale_completion_tsserver_autoimport = 1
 " --- }}}
 
 " --- Vim Plug {{{
@@ -39,6 +34,9 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+  " Aesthetic status line lightline 
+  Plug 'itchyny/lightline.vim'
+
   " Fuzzy file finder
   Plug 'ctrlpvim/ctrlp.vim'
 
@@ -77,6 +75,9 @@ call plug#begin('~/.vim/plugged')
 
   " Tools for TypeScript
   Plug 'HerringtonDarkholme/yats.vim'
+
+  " Language Server Support
+  Plug 'neoclide/coc.nvim', {'branch': 'release' }
 
   " Tools for GraphQL
   Plug 'jparise/vim-graphql'
@@ -124,11 +125,11 @@ set autowrite
 " Performance
 set lazyredraw                  " Don't redraw while running macros
 set ttyfast                     " Speed up scrolling
-set ttyscroll=3                 " Speed up scrolling
 set scrolloff=999               " Center current line vertically if we can
 set sidescrolloff=5             " Scroll horizontally before edge
 set history=25                  " Limit history to 25 commands
-set ttimeoutlen=100             " Faster mode switching
+set ttimeoutlen=100             " Faster mode switching 
+set updatetime=300              " Faster diagnostic messages
 
 " Interface
 set hidden                      " When I open a new file in a buffer, hide old buffer
@@ -136,6 +137,7 @@ set shortmess+=Iat              " Disable help screen, avoid enter prompt
 set nowrap                      " Don't line wrap
 set backspace=indent,eol,start  " Treat backspace as delete
 set modeline                    " Make file-specific settings in comments
+set cmdheight=2                 " Give more room for cmd messages
 
 " Split in the correct direction
 set splitbelow
@@ -201,19 +203,22 @@ endif
 " --- }}}
 
 " --- Tab completion {{{
-" will insert tab at beginning of line,
-" will use completion if not at beginning
-set wildmode=list:longest,list:full
-set complete=.,w,t
-function! InsertTabWrapper()
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
   let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
 " --- }}}
 
 " --- Autocommands {{{
@@ -296,6 +301,19 @@ inoremap jj <esc>
 
 " Expand opening-brace followed by ENTER to a block and place cursor inside
 inoremap {<CR> {<CR>}<Esc>O
+
+" Close an open paren
+inoremap ( ()<Esc>i
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 " --- }}}
 
 " --- Status Line {{{
@@ -347,8 +365,8 @@ nnoremap <leader>s :Gstatus<cr>
 " --- }}}
 
 " --- Easy Align {{{
-nmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
+nnoremap <leader>a <Plug>(EasyAlign)
+xnoremap <leader>a <Plug>(EasyAlign)
 " --- }}}
 
 " vim: autoindent tabstop=2 expandtab shiftwidth=2 softtabstop=2 filetype=vim
