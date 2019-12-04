@@ -67,9 +67,6 @@ call plug#begin('~/.vim/plugged')
   " Tools for code alignment
   Plug 'junegunn/vim-easy-align'
 
-  " Notetaking
-  Plug 'vimwiki/vimwiki'
-
   " Tools for TypeScript
   Plug 'HerringtonDarkholme/yats.vim'
 
@@ -249,11 +246,7 @@ if has('autocmd')
 
     autocmd BufNewFile,BufRead *.markdown,*.md setlocal filetype=markdown
 
-    " Build html after wiki saves
-    autocmd FileWritePost   *.wiki :Vimwiki2HTML
-    autocmd FileAppendPost  *.wiki :Vimwiki2HTML
-    autocmd FilterWritePost *.wiki :Vimwiki2HTML
-    autocmd BufWritePost    *.wiki :Vimwiki2HTML
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   augroup END
 endif
 " --- }}}
@@ -290,8 +283,16 @@ vnoremap < <gv
 " Clear search highlights
 nnoremap <leader>l :nohlsearch<cr>
 
-" Grep word under cursor, brings up quickfix window
-nnoremap K :grep! "\b<cword>\b"<cr>:cw<cr>
+" Press K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 " Use jj to escape insert mode
 inoremap jj <esc>
@@ -311,6 +312,16 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Create mappings for function text object
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
 " --- }}}
 
 " --- Status Line {{{
