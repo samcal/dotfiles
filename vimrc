@@ -45,6 +45,9 @@ call plug#begin('~/.vim/plugged')
   " Async linter
   Plug 'w0rp/ale'
 
+  " Color schemes from base16
+  Plug 'chriskempson/base16-vim'
+
   " Autogenerate tags
   Plug 'craigemery/vim-autotag'
 
@@ -187,13 +190,14 @@ set wildignore+=*/bower_components/*,*.svg,*/*.egg-info/*,*/bin/*
 
 " --- Color scheme {{{
 highlight CursorLine cterm=NONE ctermbg=black
-highlight CursorLineNr cterm=NONE
-highlight NonText guibg=#060606
 highlight Folded ctermbg=darkblue ctermfg=white
-highlight Todo cterm=NONE ctermfg=white ctermbg=darkred
-highlight DiffAdd ctermfg=black ctermbg=2
-highlight DiffDelete ctermfg=white ctermbg=darkred
-highlight DiffChange ctermfg=black ctermbg=yellow
+
+let base16colorspace=256
+if filereadable(expand("~/.vimrc_background"))
+  source ~/.vimrc_background
+else
+  colorscheme base16-atelier-dune
+endif
 " --- }}}
 
 " --- Tab completion {{{

@@ -69,6 +69,13 @@ bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 # use vim as the visual editor
 export VISUAL=vim
 export EDITOR=$VISUAL
+BASE16_SHELL="$HOME/.config/base16-shell/"
+
+# base16 colorscheme
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
+
 
 # mkdir .git/safe in the root of repositories you trust
 export PATH=".git/safe/../../bin:$PATH"
