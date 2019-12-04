@@ -55,9 +55,6 @@ call plug#begin('~/.vim/plugged')
   " Seamless transition between vim-splits and tmux panes
   Plug 'christoomey/vim-tmux-navigator'
 
-  " Un-indent ending structures
-  Plug 'tpope/vim-endwise'
-
   " Use Git
   Plug 'tpope/vim-fugitive'
 
