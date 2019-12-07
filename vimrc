@@ -192,7 +192,8 @@ let base16colorspace=256
 if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 else
-  colorscheme base16-atelier-dune
+  set background=dark
+  colorscheme base16-gruvbox-dark-hard
 endif
 " --- }}}
 
