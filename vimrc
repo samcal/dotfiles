@@ -324,6 +324,21 @@ omap af <Plug>(coc-funcobj-a)
 
 " --- }}}
 
+" --- Status Line {{{
+
+  let g:lightline = {
+	\ 'colorscheme': 'wombat',
+	\ 'active': {
+	\   'left': [ [ 'mode', 'paste' ],
+	\             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+	\ },
+	\ 'component_function': {
+	\   'cocstatus': 'coc#status'
+	\ },
+	\ }
+
+" --- }}}
+
 " --- Ripgrep {{{
 if executable('rg')
   " Use ripgrep over grep
