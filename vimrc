@@ -328,16 +328,20 @@ omap af <Plug>(coc-funcobj-a)
 " --- Status Line {{{
 
   let g:lightline = {
-	\ 'colorscheme': 'wombat',
-	\ 'active': {
-	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-	\ },
-	\ 'component_function': {
-	\   'cocstatus': 'coc#status'
-	\ },
-	\ }
-
+    \ 'colorscheme': 'wombat',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+    \ },
+    \ 'component_function': {
+    \   'filename': 'LightlineFilename',
+    \   'cocstatus': 'coc#status'
+    \ },
+  \ }
+   
+function! LightlineFilename()
+  return expand('%:t') !=# '' ? @% : '[No Name]'
+endfunction
 " --- }}}
 
 " --- Ripgrep {{{
