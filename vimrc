@@ -6,6 +6,7 @@ end
 
 
 " --- Ale {{{
+
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'jsx': ['eslint'],
@@ -23,6 +24,7 @@ let g:ale_fixers = {
 \}
 
 let g:ale_fix_on_save = 1
+
 " --- }}}
 
 " --- Vim Plug {{{
@@ -38,7 +40,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'itchyny/lightline.vim'
 
   " Fuzzy file finder
-  Plug 'ctrlpvim/ctrlp.vim'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
 
   " Async linter
   Plug 'w0rp/ale'
@@ -263,6 +266,13 @@ abbreviate cagdas Çağdaş
 " Leader
 let mapleader = " "
 
+" ; as :
+nnoremap ; :
+
+" Jump to start/end of line using home row keys
+nnoremap H ^
+nnoremap L $
+
 " Reload .vimrc
 nnoremap <leader>r :so $MYVIMRC<cr>
 
@@ -354,20 +364,32 @@ endfunction
 if executable('rg')
   " Use ripgrep over grep
   set grepprg=rg\ --vimgrep\ --no-heading
-
-  " Use ripgrep in CtrlP for listing files
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-
-  " ripgrep is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
 endif
 " --- }}}
 
-" --- CtrlP {{{
-let g:ctrlp_max_height=15           " Height of the ctrlp window
+" --- FZF {{{
 
-" ctags with CtrlP
-nnoremap <leader>. :CtrlPTag<cr>
+" Less crazy size for fzf
+let g:fzf_layout = { 'down': '~20%' }
+
+" Opening fizes with FZF
+nnoremap <c-p> :Files<cr>
+
+" Buffer management
+nnoremap <leader>, :Buffers<cr>
+
+" ctags with FZF
+nnoremap <leader>. :Tags<cr>
+
+" <leader>s for Rg search
+noremap <leader>s :Rg 
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
 " --- }}}
 
 " --- Tagbar {{{
@@ -376,12 +398,10 @@ nnoremap <leader>t :TagbarToggle<cr>
 " --- }}}
 
 " --- Fugitive {{{
+
 nnoremap <leader>b :Gblame<cr>
-nnoremap <leader>B :Gbrowse<cr>
-nnoremap <leader>c :Gcommit %<cr>
-nnoremap <leader>C :Gcommit -a<cr>
 nnoremap <leader>d :Gdiff<cr>
-nnoremap <leader>s :Gstatus<cr>
+
 " --- }}}
 
 " --- Easy Align {{{
