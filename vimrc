@@ -88,6 +88,9 @@ call plug#begin('~/.vim/plugged')
   " Tools for JSX
   Plug 'MaxMEllon/vim-jsx-pretty'
 
+  " Tools for Rust
+  Plug 'rust-lang/rust.vim'
+
   " Manage JS imports
   Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 call plug#end()
