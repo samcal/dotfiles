@@ -283,6 +283,9 @@ vnoremap < <gv
 
 " Clear search highlights
 nnoremap <leader>l :nohlsearch<cr>
+"
+" Grep word under cursor, brings up quickfix window
+nnoremap X :grep! "\b<cword>\b"<cr>:cw<cr>
 
 " Press K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
