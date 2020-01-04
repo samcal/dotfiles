@@ -315,10 +315,12 @@ endfunction
 inoremap jj <esc>
 
 " Expand opening-brace followed by ENTER to a block and place cursor inside
-inoremap {<CR> {<CR>}<Esc>O
+inoremap {<CR> {<CR>}<esc>O
 
 " Close an open paren
-inoremap ( ()<Esc>i
+inoremap ( ()<esc>i
+inoremap (<cr> (<cr>)<esc>O
+inoremap () ()
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -373,7 +375,7 @@ endif
 let g:fzf_layout = { 'down': '~20%' }
 
 " Opening fizes with FZF
-nnoremap <c-p> :Files<cr>
+nnoremap <c-p> :GFiles<cr>
 
 " Buffer management
 nnoremap <leader>, :Buffers<cr>
