@@ -86,6 +86,7 @@ export PATH="$PATH:$GOPATH/bin"
 # Bring in the sbins too
 export PATH="$PATH:/sbin"
 export PATH="$PATH:/usr/sbin"
+export PATH="$PATH:/usr/local/sbin"
 
 # Put installed binaries in /usr/local/bin or ~/.local/bin
 export PATH="/usr/local/bin:$PATH"
