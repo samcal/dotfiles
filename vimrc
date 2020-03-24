@@ -138,6 +138,7 @@ set nowrap                      " Don't line wrap
 set backspace=indent,eol,start  " Treat backspace as delete
 set modeline                    " Make file-specific settings in comments
 set cmdheight=2                 " Give more room for cmd messages
+set number                      " Show the line number
 
 " Split in the correct direction
 set splitbelow
@@ -147,8 +148,8 @@ set splitright
 set listchars=tab:▸\ ,eol:¬,trail:·
 
 if v:version >= 703
-  set relativenumber            " Use relative numbers for ease of movement
   set cursorline                " Highlight the current line
+  set numberwidth=6             " Use more padding for the numbers
 endif
 
 
