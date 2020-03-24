@@ -66,8 +66,8 @@ bindkey "^Y" accept-and-hold
 bindkey "^N" insert-last-word
 bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 
-# use vim as the visual editor
-export VISUAL=vim
+# use neovim as the visual editor
+export VISUAL=nvim
 export EDITOR=$VISUAL
 BASE16_SHELL="$HOME/.config/base16-shell/"
 
