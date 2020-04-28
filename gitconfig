@@ -14,6 +14,9 @@
 [core]
   excludesfile = /Users/sam/.gitignore
   autocrlf = input
+  pager = delta --plus-color="#012800" --minus-color="#340001"
+[interactive]
+  diffFilter = delta --color-only
 [commit]
   template = ~/.gitmessage
   verbose = true
