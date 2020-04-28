@@ -5,9 +5,8 @@
 [alias]
   aa = add --all
   ca = commit --amend
-  cleanup = !git branch --merged | grep -v '\\*\\|master' | xargs -n 1 git branch -d
-  co = !git checkout $(git branch | fzf)
-  del = !git branch -D $(git branch | sed '/ master$/d' | fzf)
+  co = !git checkout $(git branch | grep -v '\\*' | fzf)
+  del = !git branch -D $(git branch | grep -v '\\*\\|master' | fzf)
   last = log -1 HEAD
   open-remote = !sh -c 'git remote get-url ${1:-origin} | xargs -n 1 open' -
   pr = !hub pull-request --browse

@@ -7,14 +7,6 @@ end
 
 " --- Ale {{{
 
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'jsx': ['eslint'],
-\   'javascriptreact': ['eslint'],
-\   'typescript': ['tsserver', 'eslint'],
-\   'typescriptreact': ['tsserver', 'eslint'],
-\}
-
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
 \   'javascriptreact': ['prettier'],
@@ -36,7 +28,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-  " Aesthetic status line lightline 
+  " Aesthetic status line lightline
   Plug 'itchyny/lightline.vim'
 
   " Fuzzy file finder
@@ -79,15 +71,6 @@ call plug#begin('~/.vim/plugged')
   " Tools for GraphQL
   Plug 'jparise/vim-graphql'
 
-  " Tools for HTML
-  Plug 'othree/html5.vim', { 'for': 'html' }
-
-  " Emmet for writing HTML quickly
-  Plug 'mattn/emmet-vim', { 'for': 'html' }
-
-  " Tools for Elm
-  Plug 'lambdatoast/elm.vim'
-
   " Tools for JSX
   Plug 'MaxMEllon/vim-jsx-pretty'
 
@@ -128,7 +111,7 @@ set ttyfast                     " Speed up scrolling
 set scrolloff=999               " Center current line vertically if we can
 set sidescrolloff=5             " Scroll horizontally before edge
 set history=25                  " Limit history to 25 commands
-set ttimeoutlen=100             " Faster mode switching 
+set ttimeoutlen=100             " Faster mode switching
 set updatetime=300              " Faster diagnostic messages
 
 " Interface
@@ -139,6 +122,7 @@ set backspace=indent,eol,start  " Treat backspace as delete
 set modeline                    " Make file-specific settings in comments
 set cmdheight=2                 " Give more room for cmd messages
 set number                      " Show the line number
+set virtualedit=all             " EOL is not a navigation barrier
 
 " Split in the correct direction
 set splitbelow
@@ -246,6 +230,15 @@ if has('autocmd')
     " Wrap at 80 cols and spell check
     autocmd FileType md,markdown,text setlocal spell tw=79
 
+    " Remove trailing whitespace (cleaans up for virtualedit)
+    fun! <SID>TrimTrailingWhitespace()
+        let l = line('.')
+        let c = col('.')
+        %s/\s\+$//e
+        call cursor(l, c)
+    endfun
+    autocmd BufWritePre * :call <SID>TrimTrailingWhitespace()
+
     " Restore file cursor position on open
     autocmd BufReadPost *
          \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -275,7 +268,7 @@ nnoremap H ^
 nnoremap L $
 
 " Reload .vimrc
-nnoremap <leader>r :so $MYVIMRC<cr>
+nnoremap <leader>R :so $MYVIMRC<cr>
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
@@ -288,7 +281,7 @@ nnoremap <leader>\ :vsplit<cr>
 nnoremap <leader>- :split<cr>
 
 " Copy/Paste to/from system clipboard
-vnoremap <leader>C "+ygv
+vnoremap <leader>C "+y
 nnoremap <leader>P "+p<cr>
 
 " Don't deselect in visual mode when indenting/dedenting
@@ -320,6 +313,7 @@ inoremap {<CR> {<CR>}<esc>O
 
 " Close an open paren
 inoremap ( ()<esc>i
+inoremap (<esc> (<esc>
 inoremap (<cr> (<cr>)<esc>O
 inoremap () ()
 
@@ -336,11 +330,7 @@ nmap <silent> gr <Plug>(coc-references)
 " Rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
-" Create mappings for function text object
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
+nnoremap <leader>w :w<Enter>:!!<Enter>
 
 " --- }}}
 
@@ -357,7 +347,7 @@ omap af <Plug>(coc-funcobj-a)
     \   'cocstatus': 'coc#status'
     \ },
   \ }
-   
+
 function! LightlineFilename()
   return expand('%:t') !=# '' ? @% : '[No Name]'
 endfunction
@@ -385,7 +375,7 @@ nnoremap <leader>, :Buffers<cr>
 nnoremap <leader>. :Tags<cr>
 
 " <leader>s for Rg search
-noremap <leader>s :Rg 
+noremap <leader>s :Rg
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,

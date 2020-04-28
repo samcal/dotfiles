@@ -110,3 +110,6 @@ export NVM_DIR="$HOME/.nvm"
 [[ -f ~/.aliases ]] && source ~/.aliases
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# local env outside of source control
+[[ -f ~/.env ]] && source ~/.env
