@@ -180,12 +180,8 @@ highlight CursorLine cterm=NONE ctermbg=black
 highlight Folded ctermbg=darkblue ctermfg=white
 
 let base16colorspace=256
-if filereadable(expand("~/.vimrc_background"))
-  source ~/.vimrc_background
-else
-  set background=dark
-  colorscheme base16-gruvbox-dark-hard
-endif
+set background=dark
+colorscheme base16-gruvbox-dark-hard
 " --- }}}
 
 " --- Tab completion {{{
@@ -266,6 +262,8 @@ nnoremap ; :
 " Jump to start/end of line using home row keys
 nnoremap H ^
 nnoremap L $
+vnoremap H ^
+vnoremap L $
 
 " Reload .vimrc
 nnoremap <leader>R :so $MYVIMRC<cr>
@@ -375,7 +373,7 @@ nnoremap <leader>, :Buffers<cr>
 nnoremap <leader>. :Tags<cr>
 
 " <leader>s for Rg search
-noremap <leader>s :Rg
+noremap <leader>s :Rg<space>
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
