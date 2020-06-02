@@ -13,7 +13,7 @@
 [core]
   excludesfile = /Users/sam/.gitignore
   autocrlf = input
-  pager = delta --plus-color="#012800" --minus-color="#340001"
+  pager = delta
 [interactive]
   diffFilter = delta --color-only
 [commit]
