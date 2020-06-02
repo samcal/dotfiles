@@ -5,7 +5,6 @@ alias ...='../..'
 alias l='exa'
 alias ll='exa -al'
 alias lll='exa --tree --long'
-alias -g G='| rg'
 
 # PostgreSQL
 alias proddb='psql "$PRODUCTION_FOLLOWER_DATABASE_URL"'
