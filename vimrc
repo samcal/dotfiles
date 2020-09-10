@@ -13,6 +13,7 @@ let g:ale_fixers = {
 \   'typescript': ['prettier'],
 \   'typescriptreact': ['prettier'],
 \   'less': ['prettier'],
+\   'sql': ['sqlfmt'],
 \}
 
 let g:ale_fix_on_save = 1
@@ -76,9 +77,6 @@ call plug#begin('~/.vim/plugged')
 
   " Tools for Rust
   Plug 'rust-lang/rust.vim'
-
-  " Manage JS imports
-  Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 call plug#end()
 " --- }}}
 
@@ -108,8 +106,8 @@ set autowrite
 " Performance
 set lazyredraw                  " Don't redraw while running macros
 set ttyfast                     " Speed up scrolling
-set scrolloff=999               " Center current line vertically if we can
-set sidescrolloff=5             " Scroll horizontally before edge
+set scrolloff=20                " Center current line vertically if we can
+set sidescrolloff=10            " Scroll horizontally before edge
 set history=25                  " Limit history to 25 commands
 set ttimeoutlen=100             " Faster mode switching
 set updatetime=300              " Faster diagnostic messages
@@ -123,6 +121,7 @@ set modeline                    " Make file-specific settings in comments
 set cmdheight=2                 " Give more room for cmd messages
 set number                      " Show the line number
 set virtualedit=all             " EOL is not a navigation barrier
+set mouse=a
 
 " Split in the correct direction
 set splitbelow
@@ -328,7 +327,9 @@ nmap <silent> gr <Plug>(coc-references)
 " Rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
-nnoremap <leader>w :w<Enter>:!!<Enter>
+nnoremap <leader>w :w<enter>:!!<enter>
+
+nnoremap <leader>t :w<enter>:!tmux split-window 'yarn test-file %; cat'<enter>
 
 " --- }}}
 
@@ -381,11 +382,6 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
-" --- }}}
-
-" --- Tagbar {{{
-" ctags with Tagbar
-nnoremap <leader>t :TagbarToggle<cr>
 " --- }}}
 
 " --- Fugitive {{{

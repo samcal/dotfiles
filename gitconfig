@@ -33,3 +33,5 @@
 [user]
 	name = Sam Calvert
 	email = sam@outschool.com
+[pull]
+	ff = only

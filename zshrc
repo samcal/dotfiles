@@ -76,10 +76,6 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 
-
-# mkdir .git/safe in the root of repositories you trust
-export PATH=".git/safe/../../bin:$PATH"
-
 export GOPATH="$HOME/workspace/go"
 export PATH="$PATH:$GOPATH/bin"
 
@@ -97,10 +93,6 @@ export PATH="$HOME/Library/Python/3.6/bin:$PATH"
 
 # Installed packages with npm
 export PATH="$PATH:$HOME/.local/lib/npm/bin"
-
-# Use the binaries from current node_modules. Completion doesn't know about
-# these, so we need to nocorrect the important ones.
-export PATH=node_modules/.bin:$PATH
 
 # Setup version managers
 export NVM_DIR="$HOME/.nvm"
