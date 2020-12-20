@@ -30,7 +30,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'itchyny/lightline.vim'
 
   " Fuzzy file finder
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
 
   " Language Server Support
@@ -156,6 +156,7 @@ set smartindent                 " Try to 'improve' indenting rules
 set foldenable                  " Enable code folding on markers
 set foldmethod=syntax
 set foldnestmax=3
+set foldlevel=3
 
 " Navigating
 let g:netrw_banner = 0
@@ -302,6 +303,12 @@ inoremap (<esc> (<esc>
 inoremap (<cr> (<cr>)<esc>O
 inoremap () ()
 
+" Select in and around functions
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -343,8 +350,7 @@ if executable('rg')
   set grepprg=rg\ --vimgrep\ --no-heading
 endif
 
-" Less crazy size for fzf
-let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 }}
 
 " Opening fizes with FZF
 nnoremap <c-o> :Files<cr>
@@ -366,7 +372,7 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 
 nnoremap <leader>b :Gblame<cr>
-nnoremap <leader>d :Gdiff<cr>
+nnoremap <leader>d :GFiles?<cr>
 
 nnoremap <leader>a <Plug>(EasyAlign)
 xnoremap <leader>a <Plug>(EasyAlign)
