@@ -177,7 +177,7 @@ colorscheme base16-gruvbox-dark-hard
 highlight LineNr ctermbg=NONE
 highlight CursorLineNr ctermbg=NONE
 highlight Folded ctermfg=gray
-highlight ALEWarning ctermfg=red ctermbg=black
+highlight ALEWarning cterm=underline
 highlight ALEError ctermfg=red ctermbg=black cterm=underline
 
 inoremap <silent><expr> <TAB>
@@ -324,6 +324,9 @@ xmap ga <Plug>(EasyAlign)
 " Rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
+" React-specific refactoring
+xmap <leader>a <Plug>(coc-codeaction-selected)
+
 nnoremap <leader>w :w<enter>:!!<enter>
 
 nnoremap <leader>t :w<enter>:!tmux split-window 'zsh -c "yarn test-file %"; cat'<enter>
@@ -350,7 +353,7 @@ if executable('rg')
   set grepprg=rg\ --vimgrep\ --no-heading
 endif
 
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 }}
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'xoffset': 0.7, 'yoffset': 0.4 } }
 
 " Opening fizes with FZF
 nnoremap <c-o> :Files<cr>
