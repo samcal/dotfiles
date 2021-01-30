@@ -16,6 +16,10 @@
   pager = delta
 [interactive]
   diffFilter = delta --color-only
+[delta]
+  features = side-by-side line-numbers
+  plus-color = "#012800"
+  minus-color = "#340001"
 [commit]
   template = ~/.gitmessage
   verbose = true

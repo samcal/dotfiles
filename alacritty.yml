@@ -155,7 +155,7 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   primary:
-    background: '0x0c0d0e'
+    background: '0x0c0d1b'
     foreground: '0xb7b8b9'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
@@ -165,12 +165,12 @@ colors:
 
   # Normal colors
   normal:
-    black:   '0x0c0d0e'
-    red:     '0xe31a1c'
+    black:   '0x0c0d1b'
+    red:     '0xcb1a1c'
     green:   '0x31a354'
     yellow:  '0xdca060'
     blue:    '0x3182bd'
-    magenta: '0x756ddd'
+    magenta: '0x757ded'
     cyan:    '0x80b1d3'
     white:   '0xb7b8b9'
 

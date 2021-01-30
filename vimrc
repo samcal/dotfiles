@@ -15,7 +15,6 @@ let g:ale_fixers = {
 \}
 
 let g:ale_fix_on_save = 1
-
 let g:ale_disable_lsp = 1
 
 " Auto-install plug-vim
@@ -126,7 +125,6 @@ if v:version >= 703
   set numberwidth=6             " Use more padding for the numbers
 endif
 
-
 " Searching
 set ignorecase                  " Ignore case in search
 set smartcase                   " Don't ignore case if contains uppercase letter
@@ -172,7 +170,7 @@ set wildignore+=*/bower_components/*,*.svg,*/*.egg-info/*,*/bin/*
 
 let base16colorspace=256
 set background=dark
-colorscheme base16-gruvbox-dark-hard
+colorscheme base16-brewer
 
 highlight LineNr ctermbg=NONE
 highlight CursorLineNr ctermbg=NONE
@@ -195,7 +193,6 @@ endfunction
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
-
 if has('autocmd')
   augroup standard
     autocmd!
@@ -206,8 +203,11 @@ if has('autocmd')
     " Check spelling in git commits
     autocmd FileType gitcommit setlocal spell textwidth=72
 
-    " Filetypes with 2-space indents
-    autocmd FileType vim,javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2
+    " 2 space indents for vim
+    autocmd FileType vim setlocal ts=2 sts=2 sw=2
+
+    " 2 space indents for js and ts
+    autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2
 
     " 2 space indents for html
     autocmd FileType html setlocal ts=2 sts=2 sw=2
@@ -327,8 +327,10 @@ nmap <leader>rn <Plug>(coc-rename)
 " React-specific refactoring
 xmap <leader>a <Plug>(coc-codeaction-selected)
 
+" Save file and rerun last command
 nnoremap <leader>w :w<enter>:!!<enter>
 
+" Outschool-specific commands to run test suite in new window
 nnoremap <leader>t :w<enter>:!tmux split-window 'zsh -c "yarn test-file %"; cat'<enter>
 nnoremap <leader>j :w<enter>:!tmux split-window 'zsh -c "yarn test-jest-file %"; cat'<enter>
 
