@@ -70,6 +70,9 @@ call plug#begin('~/.vim/plugged')
 
   " Tools for Rust
   Plug 'rust-lang/rust.vim'
+
+  " Tools for Julia
+  Plug 'JuliaEditorSupport/julia-vim'
 call plug#end()
 
 " File Settings
