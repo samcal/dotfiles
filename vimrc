@@ -4,19 +4,6 @@ if &compatible
   set nocompatible
 end
 
-let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\   'javascriptreact': ['prettier'],
-\   'typescript': ['prettier'],
-\   'typescriptreact': ['prettier'],
-\   'less': ['prettier'],
-\   'sql': ['sqlfmt'],
-\   'rust': ['rustfmt'],
-\}
-
-let g:ale_fix_on_save = 1
-let g:ale_disable_lsp = 1
-
 " Auto-install plug-vim
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -28,15 +15,15 @@ call plug#begin('~/.vim/plugged')
   " Aesthetic status line lightline
   Plug 'itchyny/lightline.vim'
 
+  " Personal notetaking
+  Plug 'vimwiki/vimwiki'
+
   " Fuzzy file finder
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
 
   " Language Server Support
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-
-  " Async linter
-  Plug 'w0rp/ale'
 
   " Color schemes from base16
   Plug 'chriskempson/base16-vim'
@@ -178,8 +165,6 @@ colorscheme base16-brewer
 highlight LineNr ctermbg=NONE
 highlight CursorLineNr ctermbg=NONE
 highlight Folded ctermfg=gray
-highlight ALEWarning cterm=underline
-highlight ALEError ctermfg=red ctermbg=black cterm=underline
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -196,48 +181,48 @@ endfunction
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
-if has('autocmd')
-  augroup standard
-    autocmd!
+augroup standard
+  autocmd!
 
-    " Don't expand tabs in make files
-    autocmd FileType make setlocal noexpandtab
+  " Don't expand tabs in make files
+  autocmd FileType make setlocal noexpandtab
 
-    " Check spelling in git commits
-    autocmd FileType gitcommit setlocal spell textwidth=72
+  " Check spelling in git commits
+  autocmd FileType gitcommit setlocal spell textwidth=72
 
-    " 2 space indents for vim
-    autocmd FileType vim setlocal ts=2 sts=2 sw=2
+  " 2 space indents for vim
+  autocmd FileType vim setlocal ts=2 sts=2 sw=2
 
-    " 2 space indents for js and ts
-    autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2
+  " 2 space indents for js and ts
+  autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2
 
-    " 2 space indents for html
-    autocmd FileType html setlocal ts=2 sts=2 sw=2
+  " 2 space indents for html
+  autocmd FileType html setlocal ts=2 sts=2 sw=2
 
-    " Wrap at 80 cols and spell check
-    autocmd FileType md,markdown,text setlocal spell tw=79
+  " Wrap at 80 cols and spell check
+  autocmd FileType md,markdown,text setlocal spell tw=79
 
-    " Remove trailing whitespace (cleaans up for virtualedit)
-    fun! <SID>TrimTrailingWhitespace()
-        let l = line('.')
-        let c = col('.')
-        %s/\s\+$//e
-        call cursor(l, c)
-    endfun
-    autocmd BufWritePre * :call <SID>TrimTrailingWhitespace()
+  " Remove trailing whitespace (cleaans up for virtualedit)
+  fun! <SID>TrimTrailingWhitespace()
+      let l = line('.')
+      let c = col('.')
+      %s/\s\+$//e
+      call cursor(l, c)
+  endfun
+  autocmd BufWritePre * :call <SID>TrimTrailingWhitespace()
 
-    " Restore file cursor position on open
-    autocmd BufReadPost *
-         \ if line("'\"") > 0 && line("'\"") <= line("$") |
-         \   exe "normal! g`\"" |
-         \ endif
+  " Restore file cursor position on open
+  autocmd BufReadPost *
+       \ if line("'\"") > 0 && line("'\"") <= line("$") |
+       \   exe "normal! g`\"" |
+       \ endif
 
-    autocmd BufNewFile,BufRead *.markdown,*.md setlocal filetype=markdown
+  autocmd BufNewFile,BufRead *.markdown,*.md setlocal filetype=markdown
 
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  augroup END
-endif
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
+  autocmd BufNewFile */diary/*.wiki :r ~/.vimwiki-diary-template.wiki
+augroup END
 
 abbreviate cagdas Çağdaş
 
@@ -273,6 +258,9 @@ nnoremap <leader>P "+p<cr>
 " Don't deselect in visual mode when indenting/dedenting
 vnoremap > >gv
 vnoremap < <gv
+
+" Check off checkboxes in vimwiki
+nnoremap <leader>. :VimwikiToggleListItem<cr>
 
 " Clear search highlights
 nnoremap <leader>l :nohlsearch<cr>
@@ -327,15 +315,12 @@ xmap ga <Plug>(EasyAlign)
 " Rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
-" React-specific refactoring
-xmap <leader>a <Plug>(coc-codeaction-selected)
-
 " Save file and rerun last command
-nnoremap <leader>w :w<enter>:!!<enter>
+nnoremap <leader>r :w<enter>:!!<enter>
 
 " Outschool-specific commands to run test suite in new window
-nnoremap <leader>t :w<enter>:!tmux split-window 'zsh -c "yarn test-file %"; cat'<enter>
-nnoremap <leader>j :w<enter>:!tmux split-window 'zsh -c "yarn test-jest-file %"; cat'<enter>
+nnoremap <leader>t :w<enter>:!tmux split-window 'fish -c "yarn test-file % 2> /dev/null"; cat'<enter>
+nnoremap <leader>j :w<enter>:!tmux split-window 'fish -c "yarn test-jest-file %"; cat'<enter>
 
 let g:lightline = {
 \ 'colorscheme': 'wombat',
@@ -367,9 +352,6 @@ nnoremap <c-p> :GFiles<cr>
 " Buffer management
 nnoremap <leader>, :Buffers<cr>
 
-" ctags with FZF
-nnoremap <leader>. :Tags<cr>
-
 " <leader>s for Rg search
 noremap <leader>s :Rg<space>
 command! -bang -nargs=* Rg
@@ -379,8 +361,8 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
-nnoremap <leader>b :Gblame<cr>
-nnoremap <leader>d :GFiles?<cr>
+nnoremap <leader>b :Git blame<cr>
+nnoremap <leader>d :CocDiagnostics<cr>
 
 nnoremap <leader>a <Plug>(EasyAlign)
 xnoremap <leader>a <Plug>(EasyAlign)
