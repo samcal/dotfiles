@@ -9,7 +9,8 @@
   del = !git branch -D $(git branch | grep -v '\\*\\|master' | fzf)
   last = log -1 HEAD
   open-remote = !sh -c 'git remote get-url ${1:-origin} | xargs -n 1 open' -
-  pr = !hub pull-request --browse
+  pr = !gh pr view --web
+  checks = !gh pr checks
 [core]
   excludesfile = /Users/sam/.gitignore
   autocrlf = input
