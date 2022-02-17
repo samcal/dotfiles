@@ -23,6 +23,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
 
   " Language Server Support
+  Plug 'neovim/nvim-lspconfig'
+
+  " Completion Support
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+
+  " Snippets Support
+  Plug 'saadparwaiz1/cmp_luasnip'
+  Plug 'L3MON4D3/LuaSnip'
+
+  " Formatting Support
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
   " Color schemes from base16
@@ -42,6 +53,9 @@ call plug#begin('~/.vim/plugged')
 
   " Tools for code alignment
   Plug 'junegunn/vim-easy-align'
+
+  " Tools for hledger
+  Plug 'ledger/vim-ledger'
 
   " Tools for JavaScript
   Plug 'yuezk/vim-js'
@@ -166,21 +180,6 @@ highlight LineNr ctermbg=NONE
 highlight CursorLineNr ctermbg=NONE
 highlight Folded ctermfg=gray
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
 augroup standard
   autocmd!
 
@@ -218,8 +217,6 @@ augroup standard
        \ endif
 
   autocmd BufNewFile,BufRead *.markdown,*.md setlocal filetype=markdown
-
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
   autocmd BufNewFile */diary/*.wiki :r ~/.vimwiki-diary-template.wiki
 augroup END
@@ -260,24 +257,13 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Check off checkboxes in vimwiki
-nnoremap <leader>. :VimwikiToggleListItem<cr>
+nnoremap <leader>. :VimwikiToggleListItem<cr>:w<cr>
 
 " Clear search highlights
 nnoremap <leader>l :nohlsearch<cr>
 "
 " Grep word under cursor, brings up quickfix window
 nnoremap X :grep! "\b<cword>\b"<cr>:cw<cr>
-
-" Press K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
 
 " Use jj to escape insert mode
 inoremap jj <esc>
@@ -295,25 +281,25 @@ inoremap (<cr> (<cr>)<esc>O
 inoremap () ()
 
 " Select in and around functions
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
+" xmap if <Plug>(coc-funcobj-i)
+" omap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap af <Plug>(coc-funcobj-a)
 
 " Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
 xmap ga <Plug>(EasyAlign)
 
 " Rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" nmap <leader>rn <Plug>(coc-rename)
 
 " Save file and rerun last command
 nnoremap <leader>r :w<enter>:!!<enter>
@@ -326,11 +312,10 @@ let g:lightline = {
 \ 'colorscheme': 'wombat',
 \ 'active': {
 \   'left': [ [ 'mode', 'paste' ],
-\             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+\             [ 'readonly', 'filename', 'modified' ] ]
 \ },
 \ 'component_function': {
 \   'filename': 'LightlineFilename',
-\   'cocstatus': 'coc#status'
 \ },
 \}
 
@@ -362,9 +347,85 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 
 nnoremap <leader>b :Git blame<cr>
-nnoremap <leader>d :CocDiagnostics<cr>
+" nnoremap <leader>d :CocDiagnostics<cr>
 
 nnoremap <leader>a <Plug>(EasyAlign)
 xnoremap <leader>a <Plug>(EasyAlign)
+
+lua << EOF
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+local nvim_lsp = require('lspconfig')
+
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Uniform settings for all keybindings
+  local opts = { noremap=true, silent=false }
+
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+end
+
+local servers = { 'tsserver' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150
+    }
+  }
+end
+
+local luasnip = require('luasnip')
+
+local cmp = require('cmp')
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end
+  },
+  mapping = {
+    ['<c-space>'] = cmp.mapping.complete(),
+    ['<c-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<c-f>'] = cmp.mapping.scroll_docs(4),
+    ['<c-e>'] = cmp.mapping.close(),
+    ['<cr>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true
+    },
+   ['<tab>'] = function(fallback)
+     if cmp.visible() then
+       cmp.select_next_item()
+     else
+       fallback()
+     end
+   end,
+   ['<s-tab>'] = function(fallback)
+     if cmp.visible() then
+       cmp.select_prev_item()
+     else
+       fallback()
+     end
+   end,
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+}
+vim.o.completeopt = 'menuone,noselect'
+EOF
 
 " vim: autoindent tabstop=2 expandtab shiftwidth=2 softtabstop=2 filetype=vim
