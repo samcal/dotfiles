@@ -1,0 +1,43 @@
+# tile current space
+meh - t : yabai -m space --layout bsp;
+
+# full screen and smol
+meh - f : yabai -m space --padding abs:50:50:50:50
+meh - g : yabai -m space --padding abs:200:200:500:500
+meh - c : yabai -m space --padding abs:0:0:0:0
+
+# give the largest window golden ratio (1/phi)
+meh - b : yabai -m window largest --ratio abs:0.61803
+
+# use hyper - vim keys to navigate windows
+hyper - h : yabai -m window --focus west
+hyper - j : yabai -m window --focus south
+hyper - k : yabai -m window --focus north
+hyper - l : yabai -m window --focus east
+
+# switch window to be main
+hyper - return : yabai -m window --swap largest
+
+# toggle window split direction
+hyper - space : yabai -m window --toggle split
+
+# all windows, switch sides!
+meh - space : yabai -m space --rotate 180
+
+# balance space
+hyper - y : yabai -m space --balance
+
+# use hyper - arrow to focus display (first is main)
+hyper - up : yabai -m display --focus first
+hyper - down : yabai -m display --focus last
+
+# Application launcher
+meh - q : open -a Safari
+meh - w : open -a Firefox
+meh - a : open -a Alacritty
+meh - s : open -a Slack
+meh - d : open -a Notion
+meh - x : open -a Spotify
+
+# Selecting a window is a little harder, use yabai
+meh - z : yabai -m window (yabai -m query --windows | jq '.[] | select(.app=="zoom.us" and .title=="Zoom Meeting") | .id') --focus
