@@ -257,7 +257,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Check off checkboxes in vimwiki
-nnoremap <leader>. :VimwikiToggleListItem<cr>:w<cr>
+" nnoremap <leader>. :VimwikiToggleListItem<cr>:w<cr>
 
 " Clear search highlights
 nnoremap <leader>l :nohlsearch<cr>
@@ -302,11 +302,11 @@ xmap ga <Plug>(EasyAlign)
 " nmap <leader>rn <Plug>(coc-rename)
 
 " Save file and rerun last command
-nnoremap <leader>r :w<enter>:!!<enter>
+nnoremap <leader>. :w<enter>:!!<enter>
 
 " Outschool-specific commands to run test suite in new window
-nnoremap <leader>t :w<enter>:!tmux split-window 'fish -c "yarn test-file % 2> /dev/null"; cat'<enter>
-nnoremap <leader>j :w<enter>:!tmux split-window 'fish -c "yarn test-jest-file %"; cat'<enter>
+nnoremap <leader>t :w<enter>:!tmux split-window 'fish -c "pnpm test-file % 2> /dev/null"; cat'<enter>
+nnoremap <leader>j :w<enter>:!tmux split-window 'fish -c "pnpm test-jest-file %"; cat'<enter>
 
 let g:lightline = {
 \ 'colorscheme': 'wombat',
@@ -376,16 +376,25 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 end
 
-local servers = { 'tsserver' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150
-    }
+nvim_lsp.tsserver.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  root_dir = nvim_lsp.util.root_pattern('package.json'),
+  flags = {
+    debounce_text_changes = 150
   }
-end
+}
+
+nvim_lsp.denols.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  root_dir = nvim_lsp.util.root_pattern('deno.json', 'deno.jsonc'),
+}
+
+nvim_lsp.rust_analyzer.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
 
 local luasnip = require('luasnip')
 

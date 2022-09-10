@@ -1,35 +1,24 @@
 [push]
-  default = current
+    default = current
 [color]
-  ui = auto
+    ui = auto
 [alias]
-  aa = add --all
-  ca = commit --amend
-  co = !git switch $(git branch | grep -v '\\*' | fzf)
-  del = !git branch -D $(git branch | grep -v '\\*\\|master' | fzf)
-  last = log -1 HEAD
-  open-remote = !sh -c 'git remote get-url ${1:-origin} | xargs -n 1 open' -
-  pr = !gh pr view --web
-  checks = !gh pr checks
+    co = !git switch $(git branch | grep -v '\\*' | fzf --height=8 --layout=reverse)
+    del = !git branch -D $(git branch | grep -v '\\*\\|master' | fzf --height=8 --layout=reverse)
+	tidy = !git for-each-ref --format=\"%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%(end)\" refs/heads
 [core]
-  excludesfile = /Users/sam/.gitignore
-  autocrlf = input
-  pager = delta
-[interactive]
-  diffFilter = delta --color-only
-[delta]
-  features = side-by-side line-numbers
-  plus-color = "#012800"
-  minus-color = "#340001"
+    excludesfile = /Users/sam/.gitignore
+    autocrlf = input
 [commit]
-  template = ~/.gitmessage
-  verbose = true
+    template = ~/.gitmessage
+    verbose = true
 [blame]
-  date = format-local:%a %D %k:%M
+    date = format-local:%a %D %k:%M
 [diff]
-  algorithm = histogram
+    algorithm = histogram
+    external = difft
 [branch "master"]
-  mergeoptions = --ff-only
+    mergeoptions = --ff-only
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -40,3 +29,5 @@
 	email = sam@outschool.com
 [pull]
 	ff = only
+[init]
+	defaultBranch = main
